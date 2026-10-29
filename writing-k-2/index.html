@@ -3559,14 +3559,18 @@ function renderSheet(sheetId){
     st.append(el("span", "gr", m.grade), el("span", "code", m.code), document.createTextNode(m.text));
     stds.append(say(st, actx, "standard" + (i + 1)));
   });
-  // Lessons are taught live. In the teacher book the button turns to the week's
-  // lesson pages; elsewhere it does nothing yet.
+  // Lessons are taught live. A Lesson button shows only for a week that has lesson
+  // pages (the teacher book); it turns to them.
   const plan = LESSONS.weeks[String(page.week)];
-  const lesson = btn("bigbtn lesson", undefined, () => { if (plan) turnTo(2); });
-  lesson.innerHTML = ICON.play + "<span>Lesson</span>";
   const credit = el("footer", "credit");
   credit.innerHTML = COPYRIGHT;
-  intro.append(head, stds, lesson, credit);
+  intro.append(head, stds);
+  if (plan) {
+    const lesson = btn("bigbtn lesson", undefined, () => turnTo(2));
+    lesson.innerHTML = ICON.play + "<span>Lesson</span>";
+    intro.append(lesson);
+  }
+  intro.append(credit);
 
   const start = bookPage("start");
   const write = btn("bigbtn primary", undefined, () => turnTo(workPage()));
