@@ -90,7 +90,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
          clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-.book{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:0 24px;
+.book{max-width:2400px;margin:0 auto;padding-inline:16px;padding-block:0 24px;
       display:flex;flex-direction:column;gap:12px}
 
 /* ============================================================ MASTHEAD */
@@ -854,6 +854,8 @@ body.locked .toolbar,body.locked .pad-tools,body.locked .crayons{display:none}
 .embedded .masthead{padding:6px 4px 2px;justify-content:flex-end}
 .embedded .masthead .wordmark,.embedded .masthead .brandmark,.embedded .masthead svg,.embedded .masthead img{display:none}
 .embedded .masthead .chip-btn{margin-left:auto}
+.embedded .turnbar{padding:6px 12px;margin-top:6px}
+@media (min-width:820px){ .embedded .masthead{position:absolute;top:8px;right:12px;padding:0;z-index:5} .embedded #view{padding-top:8px} }
 /* writing lines: primary or regular, and more pages */
 .rulepick{display:inline-flex;gap:4px}
 .rulepick .mini[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-ink)}
@@ -4393,17 +4395,11 @@ const wideScreen = () => window.innerWidth >= 820;
 // The height the header, toolbar and turn bar leave for the book.
 function bookRoom(){
   const mh = $("#masthead"), tb = $("#turnbar");
-  const used = (mh ? mh.offsetHeight : 0) + (!tb || tb.hidden ? 0 : tb.offsetHeight) + ($("#dock") ? 50 : 0) + 40;
+  const floatHead = EMBEDDED && wideScreen();   // Contents floats beside the toolbar
+  const used = (mh && !floatHead ? mh.offsetHeight : 0) + (!tb || tb.hidden ? 0 : tb.offsetHeight + 14) + ($("#dock") ? 50 : 0) + 18;
   return Math.max(430, window.innerHeight - used);
 }
-// Pages a child writes on open one at a time, big, unless two side by side
-// are still big enough to write on (about 600px wide each).
-function soloPages(){
-  if (!wideScreen() || !DATA[PAGES[current]]) return false;
-  const availW = window.innerWidth - 2 * 62;
-  return Math.min(availW / 2, bookRoom() * PAGE_ASPECT) < 600;
-}
-const twoUp = () => wideScreen() && !soloPages();
+const twoUp = () => wideScreen();
 function bookPage(kind){ return el("div", "bpage " + (kind || "")); }
 
 function mountBook(list, at){
@@ -4453,7 +4449,7 @@ function sizeBook(){
   row.classList.toggle("one", phone);
   const availH = bookRoom();
   if (two) {
-    // Two pages, as big as the screen allows, in the organizer's shape.
+    // Two pages, as big as the window allows, in the organizer's shape.
     const availW = Math.max(480, row.clientWidth - 2 * ($(".turn.prev").offsetWidth + 10));
     const pw = Math.floor(Math.min(availW / 2, availH * PAGE_ASPECT));
     book.style.setProperty("--pw", pw + "px");
