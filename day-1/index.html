@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The First Day of Class</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<style>
+/* A presentation that runs in the browser. Each section is one slide; the live
+   bookshelf runs inside the "Live" slides. Arrow keys, space or a clicker move on.
+   Speaker notes open in their own window, so sharing only this tab keeps them private. */
+:root{--forest:#34512c;--forest-deep:#26401f;--green:#45852b;--heading:#336b1e;--lime:#a6c75f;--lime-soft:#cbe08f;
+  --cream:#faf6ec;--sand:#f3eddd;--line:#e7ddc6;--ink:#211e18;--body:#34302a;--muted:#7c715a;--card:#fffdf8}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--cream);color:var(--body);font-family:Poppins,Arial,sans-serif}
+a{color:var(--heading)}
+.deck{position:fixed;inset:0 0 64px 0}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:clamp(20px,4vh,48px) clamp(20px,5vw,80px);gap:clamp(12px,2.4vh,28px);overflow:auto}
+.slide.on{display:flex}
+.dark{background:var(--forest);color:var(--sand)}
+.dark h1,.dark h2{color:var(--cream)}
+.tag{align-self:flex-start;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--sand);color:var(--forest)}
+.tag.kids{background:var(--lime);color:var(--forest-deep)}
+.dark .tag{background:rgba(255,255,255,.12);color:var(--lime-soft)}
+.dark .tag.kids{background:var(--lime);color:var(--forest-deep)}
+.eyebrow{margin:0;font-size:clamp(13px,1.6vw,18px);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#71893a}
+.dark .eyebrow{color:var(--lime-soft)}
+h1{margin:0;font-size:clamp(40px,7vw,96px);font-weight:800;line-height:1.05}
+h2{margin:0;font-size:clamp(28px,4.4vw,60px);font-weight:700;line-height:1.1;color:var(--heading)}
+h3{margin:0 0 8px;font-size:clamp(18px,2vw,26px);color:var(--ink)}
+.lead{margin:0;font-size:clamp(18px,2.4vw,32px);line-height:1.4;max-width:1100px}
+.center{justify-content:center}
+.grid{display:grid;gap:clamp(12px,1.6vw,24px)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:clamp(14px,2vw,28px)}
+.card ul{margin:0;padding-left:1.1em;font-size:clamp(15px,1.6vw,21px);line-height:1.5;color:#574e3d}
+.card p{margin:0;font-size:clamp(15px,1.6vw,21px);color:#574e3d}
+.num{font-size:clamp(30px,4vw,52px);font-weight:800;color:var(--green);line-height:1}
+.hl{background:var(--forest);border-color:var(--forest);color:var(--sand)}.hl h3{color:var(--cream)}.hl .num{color:var(--lime-soft)}.hl p{color:var(--sand)}
+.dark .card{background:var(--forest-deep);border-color:var(--forest-deep)}.dark .card h3{color:var(--lime-soft)}.dark .card ul,.dark .card p{color:var(--sand)}
+.pills{display:flex;flex-wrap:wrap;gap:12px}
+.pill{font-size:clamp(15px,1.8vw,24px);font-weight:600;background:var(--lime);color:var(--forest-deep);padding:10px 22px;border-radius:999px}
+.checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 40px}
+.checks li{font-size:clamp(17px,2vw,28px);color:var(--ink);display:flex;gap:14px;align-items:baseline}
+.checks li::before{content:"✓";color:var(--green);font-weight:800}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 20px;border-radius:999px;border:2px solid var(--forest);background:var(--forest);color:#fff;font:inherit;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--forest)}
+.dark .btn{background:var(--lime);border-color:var(--lime);color:var(--forest-deep)}
+.dark .btn.ghost{background:transparent;color:var(--lime-soft);border-color:var(--lime-soft)}
+.btn:focus-visible,.navbtn:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.icons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.6vw,22px);width:100%;max-width:min(1200px,calc(200vh - 760px))}
+.icons figure{margin:0;background:#fff;border:2px solid var(--line);border-radius:18px;padding:8px;text-align:center}
+.icons img{width:100%;aspect-ratio:1;object-fit:contain;display:block}
+.icons figcaption{font-size:clamp(13px,1.3vw,17px);color:#574e3d;padding:2px 4px 6px}
+.credit{font-size:12px;color:var(--muted);margin:0}
+table{border-collapse:collapse;width:100%;font-size:clamp(15px,1.7vw,22px)}
+th,td{text-align:left;padding:12px 14px;border-bottom:2px solid var(--line);vertical-align:top}
+th{color:var(--forest-deep)}
+/* live slides: the real bookshelf, with the steps beside it */
+.live{flex:1;min-height:0;display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:20px}
+.steps{display:flex;flex-direction:column;gap:10px;overflow:auto}
+.steps ol{margin:0;padding-left:1.3em;font-size:clamp(14px,1.4vw,18px);line-height:1.45;color:var(--ink)}
+.steps li{margin-bottom:8px}
+.steps .note{font-size:14px;color:var(--muted)}
+.frame{position:relative;min-height:0;border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 14px 34px rgba(46,40,31,.12)}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.frame .loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)}
+.band{display:flex;gap:8px;flex-wrap:wrap}
+.band button[aria-pressed="true"]{background:var(--forest);color:#fff}
+/* bottom bar */
+.bar{position:fixed;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;gap:10px;padding:0 16px;background:var(--card);border-top:1px solid var(--line)}
+.bar .title{flex:1;min-width:0;font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.navbtn{min-height:44px;min-width:44px;padding:0 16px;border-radius:12px;border:2px solid var(--forest);background:#fff;color:var(--forest);font:inherit;font-weight:600;cursor:pointer}
+.navbtn.primary{background:var(--forest);color:#fff}
+.count{font-size:14px;color:var(--muted);min-width:70px;text-align:center}
+@media (max-width:820px){.g3,.g5,.checks{grid-template-columns:1fr}.g2{grid-template-columns:1fr}.live{grid-template-columns:1fr;grid-template-rows:auto 70vh}.icons{grid-template-columns:repeat(2,1fr)}.bar .title{display:none}}
+</style>
+</head>
+<body>
+<main class="deck" id="deck">
+
+<section class="slide dark center" data-title="The first day of class" data-notes="This presentation is for teachers and staff. It walks through the flow we want on Day 1. Slides marked 'Share with students' are the ones to show students. The Live slides run the real bookshelf, so you can click through it exactly like a student. Use the arrow keys, space bar or a presentation clicker to move on. Notes opens this script in its own window: share only this browser tab on Zoom and the notes stay private.">
+  <span class="tag">For teachers</span>
+  <p class="eyebrow">Thrive Academy · Dry run</p>
+  <h1>The first day of class</h1>
+  <p class="lead">How we want Day 1 to flow, for K-2, 3-5 and 6-8 classes. The bookshelf on the Live slides is the real one.</p>
+  <div class="btns">
+    <a class="btn" href="https://danahughes.github.io/developer-thrive-bookshelf/thrive-wood-bookshelf.html" target="_blank" rel="noopener">Open the bookshelf</a>
+    <a class="btn ghost" href="https://danahughes.github.io/teacher-versions-thrive-bookshelf/" target="_blank" rel="noopener">Teacher books</a>
+    <a class="btn ghost" href="https://danahughes.github.io/teacher-versions-thrive-bookshelf/How_to_Present_a_Writing_Lesson.pdf" target="_blank" rel="noopener">How to present a writing lesson</a>
+  </div>
+</section>
+
+<section class="slide" data-title="The flow" data-notes="The big idea: keep the live part short and friendly, get every student signed in and started, then support them while they work. Teaching takes about 20 minutes. The teacher stays on Zoom the whole time students work.">
+  <span class="tag">For teachers</span>
+  <p class="eyebrow">The flow</p>
+  <h2>Short teaching, then the check-in</h2>
+  <div class="grid g5">
+    <div class="card"><div class="num">1</div><h3>Hellos and Zoom game</h3><p>10 min</p></div>
+    <div class="card"><div class="num">2</div><h3>Class agreements</h3><p>3 min</p></div>
+    <div class="card"><div class="num">3</div><h3>Into the bookshelf</h3><p>5 min</p></div>
+    <div class="card hl"><div class="num">4</div><h3>Reading check-in</h3><p>Rest of class</p></div>
+    <div class="card"><div class="num">5</div><h3>Goodbye</h3><p>2 min</p></div>
+  </div>
+  <p class="lead">Teaching takes about 20 minutes. The teacher stays on Zoom the whole time students work.</p>
+</section>
+
+<section class="slide" style="background:var(--sand)" data-title="Before class" data-notes="The ELA Benchmark window is set by an IXL admin. Check it under the Assessment tab in IXL; without an open window, students won't see the Start my Benchmark button. Headphones matter because some Benchmark questions are read aloud. For K-2, ask a parent to sit with the student for the sign-in.">
+  <span class="tag">For teachers</span>
+  <p class="eyebrow">Before class</p>
+  <h2>Ready before the first student joins</h2>
+  <ul class="checks">
+    <li>Zoom link sent to every family</li>
+    <li>Student Clever logins ready</li>
+    <li>ELA Benchmark window is open in IXL</li>
+    <li>Families told: bring headphones</li>
+    <li>This presentation open in its own tab</li>
+    <li>Class list to check off names</li>
+  </ul>
+  <div class="btns">
+    <a class="btn" href="https://clever.com/login" target="_blank" rel="noopener">Clever sign-in</a>
+    <a class="btn ghost" href="https://www.ixl.com/signin" target="_blank" rel="noopener">IXL teacher sign-in</a>
+    <a class="btn ghost" href="https://danahughes.github.io/developer-thrive-bookshelf/thrive-wood-bookshelf.html" target="_blank" rel="noopener">Student bookshelf</a>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 1: Hellos and the Zoom game" data-notes="The game teaches the Zoom tools without a lecture: each command is one button. The next three slides are the ones to share with students.">
+  <span class="tag">For teachers</span>
+  <p class="eyebrow">Step 1 · 10 minutes</p>
+  <h2>Hellos and the Zoom game</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Teacher</h3><ul><li>Greets each student by name</li><li>Goes first: name, grade, one favorite</li><li>Leads “Mrs. _____ Says” with the Zoom buttons</li></ul></div>
+    <div class="card"><h3>Students</h3><ul><li>Share their name, grade and a favorite</li><li>Practice mute, video, reactions and chat</li><li>Learn where every button is</li></ul></div>
+  </div>
+  <p class="lead"><b>Goal:</b> everyone feels welcome and can use every Zoom button.</p>
+</section>
+
+<section class="slide" data-title="Tell us about you" data-notes="Teacher goes first to model it. Then call on each student by name so nobody has to figure out when to talk. About 20 seconds each. K-2: a parent can help them unmute. 6-8: they can answer in the chat if they are shy.">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">Say hello</p>
+  <h2>Tell us about you</h2>
+  <div class="grid g3">
+    <div class="card"><div class="num">1</div><h3>Your name</h3><p>What should we call you?</p></div>
+    <div class="card"><div class="num">2</div><h3>Your grade</h3><p>What grade are you in this year?</p></div>
+    <div class="card"><div class="num">3</div><h3>One favorite</h3><p>A food, an animal, or something you love to do.</p></div>
+  </div>
+</section>
+
+<section class="slide dark" data-title="Mrs. _____ Says!" data-notes="About 6 minutes. Call out commands one at a time, mixing in some without 'Mrs. _____ says' to keep it fun. Suggested order: 'Mrs. _____ says unmute, say your favorite color, mute again.' 'Mrs. _____ says send a thumbs up.' 'Thumbs down!' (no says). 'Mrs. _____ says turn your video off... and back on.' 'Mrs. _____ says type hi in the chat.' 'Mrs. _____ says switch to gallery view.' Finish with 'Mrs. _____ says wave goodbye to the game!' K-2: one step at a time; tell parents ahead of time. 6-8: go faster and add 'rename yourself to your first name.'">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">Game time</p>
+  <h1>Mrs. _____ Says!</h1>
+  <p class="lead">Like Simon Says, with your Zoom buttons. Only do it when you hear “Mrs. _____ says.”</p>
+  <div class="pills"><span class="pill">Unmute, then mute</span><span class="pill">Video off, then on</span><span class="pill">Thumbs up</span><span class="pill">Type hi in the chat</span><span class="pill">Gallery view</span></div>
+</section>
+
+<section class="slide" data-title="Your Zoom buttons" data-notes="Point to each button on your own Zoom screen while you name it. Zoom puts these at the bottom of the window; on a tablet they may be at the top. Remind everyone that Leave Meeting is only for the very end of class.">
+  <span class="tag kids">Share with students</span>
+  <h2>Your Zoom buttons</h2>
+  <div class="icons">
+    <figure><img src="zoom/video-off.png" alt="Video off: a camera icon"><figcaption>Video</figcaption></figure>
+    <figure><img src="zoom/video-on.png" alt="Video on: a crossed-out camera icon"><figcaption>Video</figcaption></figure>
+    <figure><img src="zoom/mute.png" alt="Mute: a microphone icon"><figcaption>Microphone</figcaption></figure>
+    <figure><img src="zoom/unmute.png" alt="Unmute: a crossed-out microphone icon"><figcaption>Microphone</figcaption></figure>
+    <figure><img src="zoom/gallery.png" alt="Gallery view: a grid of nine squares"><figcaption>See everyone</figcaption></figure>
+    <figure><img src="zoom/thumbs-up.png" alt="Thumbs up"><figcaption>Reactions</figcaption></figure>
+    <figure><img src="zoom/thumbs-down.png" alt="Thumbs down"><figcaption>Reactions</figcaption></figure>
+    <figure><img src="zoom/leave.png" alt="End of Zoom: the red Leave Meeting button"><figcaption>Only at the very end</figcaption></figure>
+  </div>
+  <p class="credit">Zoom icons: @year1withmiss.chelle</p>
+</section>
+
+<section class="slide" style="background:var(--sand)" data-title="Class agreements" data-notes="About 3 minutes. Read each one and ask for a thumbs up reaction if they agree. 6-8: ask them to add one agreement of their own in the chat.">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">Our class agreements</p>
+  <h2>How we learn together on Zoom</h2>
+  <ul class="checks">
+    <li>Muted until it’s my turn</li><li>Camera on, face in view</li>
+    <li>Raise my hand to talk</li><li>Kind words in the chat</li>
+    <li>A quiet spot to learn</li><li>Ask for help any time</li>
+  </ul>
+</section>
+
+<section class="slide" data-title="Live: into the bookshelf" data-notes="This is the real bookshelf. Click along with the class. K-5: the check-in is Assignment 2 in Core Language Arts. 6-8: it is Assignment 1. The check-in button opens IXL's Diagnostic area (the LevelUp ELA Benchmark); students never see the IXL name on the bookshelf. If IXL shows an information page, the student isn't signed in yet: sign in through Clever, then tap Start my Benchmark on the IXL home page. Lexia: students start with an auto-placement, and teachers can't assign levels in PowerUp. Lexia places each student and moves them up on its own.">
+  <span class="tag">Live · share with students</span>
+  <h2>From sign-in to the check-in</h2>
+  <div class="live">
+    <div class="steps card">
+      <ol>
+        <li><b>Sign in to Clever.</b> <a href="https://clever.com/login" target="_blank" rel="noopener">clever.com/login</a></li>
+        <li>On <b>My Day</b>, pick your grade and tap <b>Language Arts</b>.</li>
+        <li>Tap the book <b>Core Language Arts</b>. It says <b>Start Here</b>.</li>
+        <li>Tap <b>Assignment 2</b>. Grades 6-8: <b>Assignment 1</b>.</li>
+        <li>Tap <b>Start my Benchmark</b>, then <b>Yes, start Benchmark</b>.</li>
+      </ol>
+      <p class="note">The bookshelf here is the real one. Anything you click works.</p>
+      <a class="btn ghost" href="https://danahughes.github.io/developer-thrive-bookshelf/thrive-wood-bookshelf.html" target="_blank" rel="noopener">Open in its own tab</a>
+    </div>
+    <div class="frame"><span class="loading">Loading the bookshelf…</span><iframe data-src="https://danahughes.github.io/developer-thrive-bookshelf/thrive-wood-bookshelf.html" title="The Thrive bookshelf, live" allow="fullscreen; clipboard-write"></iframe></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Live: look ahead and Math Lessons" data-notes="Show students they can tap a later day to see what's coming; it never launches early. Math Lessons, three days a week: Day 1, the Diagnostic and then Recommendations; Day 2, Recommendations; Day 3, the assigned path. Minutes: K 25, 1-2 35, 3-5 50, 6-8 60. Language Arts minutes: K 15 and 25, 1-2 20 and 20, 3-5 20 and 30, 6-8 40 and 30.">
+  <span class="tag">Live · share with students</span>
+  <h2>See what’s coming, and Math Lessons</h2>
+  <div class="live">
+    <div class="steps card">
+      <ol>
+        <li>Open any book. <b>Today</b> is the big card.</li>
+        <li>Tap <b>Day 2</b> or <b>Day 3</b> to look ahead. It shows the assignments and minutes, and says <b>Not today</b>.</li>
+        <li>Go back, tap <b>Mathematics</b>, then the math book.</li>
+        <li>Day 1: Diagnostic, then Recommendations. Day 2: Recommendations. Day 3: your assigned path.</li>
+      </ol>
+    </div>
+    <div class="frame"><span class="loading">Loading the bookshelf…</span><iframe data-src="https://danahughes.github.io/developer-thrive-bookshelf/thrive-wood-bookshelf.html" title="The Thrive bookshelf, live" allow="fullscreen; clipboard-write"></iframe></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Live: the Writing book" data-notes="Each week: one live writing lesson (Day 1 is teacher modeling with the Teacher Book), then students plan on their organizer and write on the lines, which sit side by side. Pick your grade band above the book. Teacher books with a click-through lesson for every week are linked here too.">
+  <span class="tag">Live · for teachers</span>
+  <h2>The Writing book</h2>
+  <div class="live">
+    <div class="steps card">
+      <div class="band" role="group" aria-label="Grade band">
+        <button class="btn ghost" type="button" aria-pressed="true" data-band="https://danahughes.github.io/K-2-thrive-bookshelf/writing/">K-2</button>
+        <button class="btn ghost" type="button" aria-pressed="false" data-band="https://danahughes.github.io/3-5-thrive-bookshelf/writing/">3-5</button>
+        <button class="btn ghost" type="button" aria-pressed="false" data-band="https://danahughes.github.io/6-8-thrive-bookshelf/writing/">6-8</button>
+      </div>
+      <ol>
+        <li>Turn to this week, then <b>My Turn to Write</b>.</li>
+        <li>The organizer and the writing lines sit side by side.</li>
+        <li>Draw, type, or switch line styles from the toolbar.</li>
+      </ol>
+      <div class="btns">
+        <a class="btn ghost" href="https://danahughes.github.io/teacher-versions-thrive-bookshelf/writing-k-2/" target="_blank" rel="noopener">K-2 Teacher Book</a>
+        <a class="btn ghost" href="https://danahughes.github.io/teacher-versions-thrive-bookshelf/writing-3-5/" target="_blank" rel="noopener">3-5 Teacher Book</a>
+        <a class="btn ghost" href="https://danahughes.github.io/teacher-versions-thrive-bookshelf/writing-6-8/" target="_blank" rel="noopener">6-8 Teacher Book</a>
+      </div>
+    </div>
+    <div class="frame"><span class="loading">Loading the Writing book…</span><iframe id="writingFrame" data-src="https://danahughes.github.io/K-2-thrive-bookshelf/writing/" title="The Writing book, live" allow="fullscreen"></iframe></div>
+  </div>
+</section>
+
+<section class="slide dark" data-title="Your reading check-in" data-notes="Say this before anyone starts so nobody worries. From IXL's teacher guide for the LevelUp ELA Benchmark: some questions use sound, so K-8 students need headphones with the volume on. It takes up to 90 minutes and IXL suggests more than one sitting; it pauses on its own if a student leaves the page. Each question has a time limit (3 minutes, or 5 for reading questions at 6th-grade level and up). Lexia Core5 and PowerUp also start with an auto-placement the first time; teachers can't assign levels, Lexia places each student.">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">Your reading check-in</p>
+  <h1>This is not a test you pass or fail.</h1>
+  <p class="lead">It helps us see what you already know, so your lessons fit you just right.</p>
+  <div class="pills"><span class="pill">Do your best</span><span class="pill">Put on your headphones</span><span class="pill">Some questions will be tricky</span></div>
+</section>
+
+<section class="slide" data-title="While you work" data-notes="Leave this slide up while students work. Keep your mic ready and check the chat often. Early finishers can read or open this week's Writing page. To see who finished: IXL, Analytics tab, LevelUp Diagnostic Overview report.">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">While you work</p>
+  <h2>I’m right here with you</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Stuck?</h3><p>Raise your hand or send me a chat.</p></div>
+    <div class="card"><h3>Need a break?</h3><p>Stretch, then come right back.</p></div>
+    <div class="card"><h3>All done?</h3><p>Send a thumbs up and wait for the teacher.</p></div>
+  </div>
+</section>
+
+<section class="slide dark center" data-title="See you next time!" data-notes="About 2 minutes. Name one thing that went well, tell them what's next class, wave goodbye together, then practice leaving with the red Leave Meeting button. Stay on a few minutes for parent questions. Students who didn't finish the check-in pick it up next class; it saves where they stopped.">
+  <span class="tag kids">Share with students</span>
+  <p class="eyebrow">Great first day</p>
+  <h1>See you next time!</h1>
+  <p class="lead">Wave goodbye, then tap the red Leave Meeting button.</p>
+</section>
+
+<section class="slide" style="background:var(--sand)" data-title="One flow, three grade bands" data-notes="Everything else stays the same for every teacher, so the three classes feel like one school.">
+  <span class="tag">For teachers</span>
+  <p class="eyebrow">One flow, three grade bands</p>
+  <h2>Small changes by age</h2>
+  <table>
+    <tr><th style="width:16%">Band</th><th>Language Arts (Core Language Arts)</th><th>Math Lessons</th><th>During the day</th></tr>
+    <tr><td>K</td><td>Assignment 1: 15 min · Assignment 2: 25 min</td><td>25 min</td><td>A parent helps sign in; break halfway</td></tr>
+    <tr><td>1-2</td><td>Assignment 1: 20 min · Assignment 2: 20 min</td><td>35 min</td><td>A parent helps sign in</td></tr>
+    <tr><td>3-5</td><td>Assignment 1: 20 min · Assignment 2: 30 min</td><td>50 min</td><td>Check in on quiet students</td></tr>
+    <tr><td>6-8</td><td>Assignment 1 (check-in): 40 min · Assignment 2: 30 min</td><td>60 min</td><td>May finish the check-in another day</td></tr>
+  </table>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Presentation">
+  <button class="navbtn" id="prev" type="button" aria-label="Previous slide">‹ Back</button>
+  <span class="count" id="count" aria-live="polite"></span>
+  <button class="navbtn primary" id="next" type="button" aria-label="Next slide">Next ›</button>
+  <span class="title" id="slideTitle"></span>
+  <button class="navbtn" id="notes" type="button">Notes</button>
+  <button class="navbtn" id="full" type="button">Full screen</button>
+</nav>
+
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  let at = 0, notesWin = null;
+  const $ = id => document.getElementById(id);
+  function load(s) {
+    s.querySelectorAll('iframe[data-src]').forEach(f => { if (!f.src) { f.src = f.dataset.src; f.addEventListener('load', () => { const l = f.parentElement.querySelector('.loading'); if (l) l.remove(); }, { once:true }); } });
+  }
+  function show(i) {
+    at = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('on', k === at));
+    load(slides[at]);
+    $('count').textContent = (at + 1) + ' / ' + slides.length;
+    $('slideTitle').textContent = slides[at].dataset.title || '';
+    $('prev').disabled = at === 0; $('next').disabled = at === slides.length - 1;
+    history.replaceState(null, '', '#' + (at + 1));
+    writeNotes();
+  }
+  function writeNotes() {
+    if (!notesWin || notesWin.closed) return;
+    const s = slides[at], n = slides[at + 1], d = notesWin.document;
+    d.title = 'Notes: ' + (s.dataset.title || '');
+    d.body.innerHTML = '';
+    const h = d.createElement('h1'); h.textContent = (at + 1) + '. ' + (s.dataset.title || ''); d.body.append(h);
+    const p = d.createElement('p'); p.textContent = s.dataset.notes || 'No notes for this slide.'; d.body.append(p);
+    if (n) { const x = d.createElement('p'); x.className = 'next'; x.textContent = 'Next: ' + (n.dataset.title || ''); d.body.append(x); }
+    const bar = d.createElement('div');
+    [['‹ Back', -1], ['Next ›', 1]].forEach(([t, step]) => { const b = d.createElement('button'); b.textContent = t; b.onclick = () => show(at + step); bar.append(b); });
+    d.body.append(bar);
+  }
+  $('notes').onclick = () => {
+    notesWin = window.open('', 'thrive-day1-notes', 'width=520,height=640');
+    if (!notesWin) { alert('Allow pop-ups for this page to open the notes window.'); return; }
+    notesWin.document.head.innerHTML = '<style>body{font:18px/1.5 Poppins,Arial,sans-serif;padding:20px;color:#211e18;background:#faf6ec}h1{font-size:22px;color:#336b1e}.next{color:#7c715a;border-top:1px solid #e7ddc6;padding-top:10px}button{font:inherit;font-weight:600;padding:8px 16px;margin-right:8px;border-radius:10px;border:2px solid #34512c;background:#34512c;color:#fff;cursor:pointer}</style>';
+    writeNotes();
+  };
+  window.addEventListener('beforeunload', () => { if (notesWin && !notesWin.closed) notesWin.close(); });
+  $('prev').onclick = () => show(at - 1);
+  $('next').onclick = () => show(at + 1);
+  $('full').onclick = () => { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {}); };
+  document.addEventListener('keydown', e => {
+    if (e.target.closest && e.target.closest('input, textarea, select')) return;
+    if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(at + 1); }
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); show(at - 1); }
+  });
+  document.querySelectorAll('[data-band]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-band]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    $('writingFrame').src = b.dataset.band;
+  }));
+  const start = parseInt(location.hash.slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>
