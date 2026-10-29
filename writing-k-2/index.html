@@ -850,6 +850,10 @@ body.locked .toolbar,body.locked .pad-tools,body.locked .crayons{display:none}
                 background:var(--sand);color:var(--sand-ink);font-weight:700;font-size:11px;text-align:center}
 .stds .ican .code{margin-right:6px}
 .bpage.intro .bigbtn.lesson{margin-top:4px}
+/* Inside the bookshelf's window: no logo row, just Contents, so the pages get the room. */
+.embedded .masthead{padding:6px 4px 2px;justify-content:flex-end}
+.embedded .masthead .wordmark,.embedded .masthead .brandmark,.embedded .masthead svg,.embedded .masthead img{display:none}
+.embedded .masthead .chip-btn{margin-left:auto}
 /* writing lines: primary or regular, and more pages */
 .rulepick{display:inline-flex;gap:4px}
 .rulepick .mini[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-ink)}
@@ -4383,7 +4387,23 @@ function paperPop(){
 const PAGE_ASPECT = 1545 / 2000;          // the organizer's shape, so it fills its page
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let leaves = [], pos = 0;
-const twoUp = () => window.innerWidth >= 820;
+const EMBEDDED = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+if (EMBEDDED) document.documentElement.classList.add("embedded");
+const wideScreen = () => window.innerWidth >= 820;
+// The height the header, toolbar and turn bar leave for the book.
+function bookRoom(){
+  const mh = $("#masthead"), tb = $("#turnbar");
+  const used = (mh ? mh.offsetHeight : 0) + (!tb || tb.hidden ? 0 : tb.offsetHeight) + ($("#dock") ? 50 : 0) + 40;
+  return Math.max(430, window.innerHeight - used);
+}
+// Pages a child writes on open one at a time, big, unless two side by side
+// are still big enough to write on (about 600px wide each).
+function soloPages(){
+  if (!wideScreen() || !DATA[PAGES[current]]) return false;
+  const availW = window.innerWidth - 2 * 62;
+  return Math.min(availW / 2, bookRoom() * PAGE_ASPECT) < 600;
+}
+const twoUp = () => wideScreen() && !soloPages();
 function bookPage(kind){ return el("div", "bpage " + (kind || "")); }
 
 function mountBook(list, at){
@@ -4428,23 +4448,28 @@ function layout(){
 function sizeBook(){
   const book = $(".spreadbook"), row = $(".bookrow");
   if (!book || !row) return;
-  const two = twoUp();
+  const two = twoUp(), phone = !wideScreen();
   book.classList.toggle("one", !two);
-  row.classList.toggle("one", !two);
-  const dk = $("#dock");
-  const used = $("#masthead").offsetHeight + ($("#turnbar").hidden ? 0 : $("#turnbar").offsetHeight) + (dk ? 50 : 0) + 52;
+  row.classList.toggle("one", phone);
+  const availH = bookRoom();
   if (two) {
     // Two pages, as big as the screen allows, in the organizer's shape.
     const availW = Math.max(480, row.clientWidth - 2 * ($(".turn.prev").offsetWidth + 10));
-    const availH = Math.max(430, window.innerHeight - used);
     const pw = Math.floor(Math.min(availW / 2, availH * PAGE_ASPECT));
+    book.style.setProperty("--pw", pw + "px");
+    book.style.setProperty("--ph", Math.floor(pw / PAGE_ASPECT) + "px");
+  } else if (!phone) {
+    // One big page between the arrows, in the organizer's shape. It may be
+    // taller than the window: the page scrolls, and the lines stay big enough to write on.
+    const availW = Math.max(320, row.clientWidth - 2 * ($(".turn.prev").offsetWidth + 10));
+    const pw = Math.floor(Math.min(availW, 760));
     book.style.setProperty("--pw", pw + "px");
     book.style.setProperty("--ph", Math.floor(pw / PAGE_ASPECT) + "px");
   } else {
     // A phone: one page, the full width, the arrows underneath.
     const pw = Math.floor(Math.min(row.clientWidth, 620));
     book.style.setProperty("--pw", pw + "px");
-    book.style.setProperty("--ph", Math.floor(Math.max(560, window.innerHeight - used - 56)) + "px");
+    book.style.setProperty("--ph", Math.floor(Math.max(560, availH - 56)) + "px");
   }
 }
 /* Each drawing space keeps its shape and grows to fill the space it has. */
